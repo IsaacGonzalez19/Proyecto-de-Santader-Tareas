@@ -1,0 +1,10 @@
+{
+  "tareas": [
+    {
+      "id": 1,
+      "texto": "Investigación ",
+      "completada": true
+    }
+  ],
+  "siguiente_id": 2
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de tareas</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      max-width: 36rem;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.5;
+      color: #1a1a1a;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 1.25rem; }
+    form.agregar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    form.agregar input[type="text"] {
+      flex: 1;
+      min-width: 12rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    form.agregar button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      background: #0d6efd;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    form.agregar button:hover { background: #0b5ed7; }
+    ul.tareas {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    ul.tareas li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    ul.tareas li.completada .texto {
+      text-decoration: line-through;
+      color: #888;
+    }
+    ul.tareas .texto { flex: 1; word-break: break-word; }
+    ul.tareas a.completar {
+      flex-shrink: 0;
+      font-size: 0.875rem;
+      color: #0d6efd;
+      text-decoration: none;
+    }
+    ul.tareas a.completar:hover { text-decoration: underline; }
+    .vacio {
+      color: #666;
+      font-style: italic;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tareas</h1>
+
+  <form class="agregar" action="{{ url_for('agregar') }}" method="post">
+    <input
+      type="text"
+      id="texto_tarea"
+      name="texto_tarea"
+      placeholder="Escribe una tarea…"
+      autocomplete="off"
+      required
+      aria-label="Nueva tarea"
+    >
+    <button type="submit">Añadir</button>
+  </form>
+
+  {% if tareas %}
+    <ul class="tareas">
+      {% for tarea in tareas %}
+        <li class="{% if tarea.completada %}completada{% endif %}">
+          <span class="texto">{{ tarea.texto }}</span>
+          {% if not tarea.completada %}
+            <a class="completar" href="{{ url_for('completar', id=tarea.id) }}">Completar</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="vacio">No hay tareas todavía.</p>
+  {% endif %}
+</body>
+</html>
