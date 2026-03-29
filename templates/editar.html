@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Editar tarea{% endblock %}
+{% block body %}
+  <a class="volver" href="{{ url_for('index') }}">← Volver a la lista</a>
+  <h1>Editar tarea</h1>
+
+  <form class="editar" action="{{ url_for('editar', id=tarea.id) }}" method="post">
+    <input
+      type="text"
+      id="texto_tarea"
+      name="texto_tarea"
+      value="{{ tarea.texto }}"
+      autocomplete="off"
+      required
+      aria-label="Texto de la tarea"
+    >
+    <button type="submit">Guardar</button>
+    <a class="btn-secundario" href="{{ url_for('index') }}">Cancelar</a>
+  </form>
+{% endblock %}

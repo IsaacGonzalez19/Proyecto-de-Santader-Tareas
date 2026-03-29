@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, url_for
 
 app = Flask(__name__)
 
@@ -65,21 +65,62 @@ def completar_tarea(id):
             guardar_tareas()
             break
 
+
+def obtener_tarea(id):
+    for tarea in tareas:
+        if tarea['id'] == id:
+            return tarea
+    return None
+
+
+def borrar_tarea(id):
+    global tareas
+    antes = len(tareas)
+    tareas = [t for t in tareas if t['id'] != id]
+    if len(tareas) != antes:
+        guardar_tareas()
+
+
+def actualizar_tarea(id, texto):
+    tarea = obtener_tarea(id)
+    if tarea is None:
+        return False
+    tarea['texto'] = texto
+    guardar_tareas()
+    return True
+
+
 @app.route('/agregar', methods=['POST'])
 def agregar():
     texto_tarea = request.form.get('texto_tarea')
     if texto_tarea:
         agregar_tarea(texto_tarea)
-    return redirect('/')
+    return redirect(url_for('index'))
 
 
 @app.route('/completar/<int:id>')
 def completar(id):
     completar_tarea(id)
-    return redirect('/')
+    return redirect(url_for('index'))
 
 
+@app.route('/borrar/<int:id>', methods=['POST'])
+def borrar(id):
+    borrar_tarea(id)
+    return redirect(url_for('index'))
 
+
+@app.route('/editar/<int:id>', methods=['GET', 'POST'])
+def editar(id):
+    tarea = obtener_tarea(id)
+    if tarea is None:
+        return redirect(url_for('index'))
+    if request.method == 'POST':
+        texto = (request.form.get('texto_tarea') or '').strip()
+        if texto:
+            actualizar_tarea(id, texto)
+        return redirect(url_for('index'))
+    return render_template('editar.html', tarea=tarea)
 
 
 if __name__ == '__main__':

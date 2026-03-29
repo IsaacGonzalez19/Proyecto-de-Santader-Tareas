@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Lista de tareas{% endblock %}</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      max-width: 36rem;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.5;
+      color: #1a1a1a;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 1.25rem; }
+    .volver {
+      display: inline-block;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #0d6efd;
+      text-decoration: none;
+    }
+    .volver:hover { text-decoration: underline; }
+    form.agregar, form.editar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    form.agregar input[type="text"], form.editar input[type="text"] {
+      flex: 1;
+      min-width: 12rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    form.agregar button, form.editar button[type="submit"] {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      background: #0d6efd;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    form.agregar button:hover, form.editar button[type="submit"]:hover { background: #0b5ed7; }
+    form.editar .btn-secundario {
+      background: #6c757d;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    form.editar .btn-secundario:hover { background: #5c636a; color: #fff; }
+    ul.tareas {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    ul.tareas li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+    }
+    ul.tareas li.completada .texto {
+      text-decoration: line-through;
+      color: #888;
+    }
+    ul.tareas .texto { flex: 1; min-width: 8rem; word-break: break-word; }
+    ul.tareas .acciones {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    ul.tareas .acciones a {
+      font-size: 0.875rem;
+      color: #0d6efd;
+      text-decoration: none;
+    }
+    ul.tareas .acciones a:hover { text-decoration: underline; }
+    ul.tareas .acciones form { display: inline; margin: 0; }
+    ul.tareas .acciones button.borrar {
+      padding: 0;
+      border: none;
+      background: none;
+      font: inherit;
+      font-size: 0.875rem;
+      color: #b02a37;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    ul.tareas .acciones button.borrar:hover { color: #842029; }
+    .vacio {
+      color: #666;
+      font-style: italic;
+      margin: 0;
+    }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  {% block body %}{% endblock %}
+</body>
+</html>
